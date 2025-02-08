@@ -24,17 +24,22 @@ namespace DevFullstackGuia.Controllers
             _context = context;
         }
 
-        [HttpGet(Name = "GetCliente")]
-        public IEnumerable<Suite> Get()
+        [HttpGet(Name = "GetSuite")]
+        public async Task<ActionResult<IEnumerable<Suite>>> Get()
         {
-            // Return a list of users with mock data
-            return Enumerable.Range(1, 5).Select(index => new Suite
+            try
             {
-                Numero = $"User {index}",
-                Disponivel = true,
-                Tipo = $"senha {index}"
-            })
-            .ToArray();
+                // Fetch all Suite entities from the database
+                var suites = await _context.Suite.ToListAsync();
+
+                // Return the list of suites
+                return Ok(suites);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error fetching suites from the database");
+                return StatusCode(500, "An error occurred while fetching suites.");
+            }
         }
 
         [HttpPost]

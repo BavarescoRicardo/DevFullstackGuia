@@ -25,18 +25,21 @@ namespace DevFullstackGuia.Controllers
         }
 
         [HttpGet(Name = "GetCliente")]
-        public IEnumerable<Cliente> Get()
+        public async Task<ActionResult<IEnumerable<Cliente>>> Get()
         {
-            // Return a list of users with mock data
-            return Enumerable.Range(1, 5).Select(index => new Cliente
+            try
             {
-                Nome = $"User {index}",
-                Email = $"email@ {index}",
-                Senha = $"senha {index}",
-                Documento = $"0000000{index}",
-                DataNascimento = DateOnly.FromDateTime(DateTime.Now.AddDays(index))
-            })
-            .ToArray();
+                // Fetch all Suite entities from the database
+                var clientes = await _context.Cliente.ToListAsync();
+
+                // Return the list of suites
+                return Ok(clientes);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error fetching clientes from the database");
+                return StatusCode(500, "An error occurred while fetching clientes.");
+            }
         }
 
         [HttpPost]
@@ -46,7 +49,7 @@ namespace DevFullstackGuia.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _context.User.Add(cliente);
+                    _context.Cliente.Add(cliente);
                     await _context.SaveChangesAsync();
                     return CreatedAtAction(nameof(Get), new { id = cliente.Id }, cliente);
                 }

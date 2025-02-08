@@ -12,21 +12,21 @@ namespace DevFullstackGuia.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherController> _logger;
+        private readonly ILogger<ReservaController> _logger;
 
-        public ReservaController(ILogger<WeatherController> logger)
+        public ReservaController(ILogger<ReservaController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet(Name = "GetReserva")]
-        public IEnumerable<Weather> Get()
+        public IEnumerable<Reserva> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new Weather
+            return Enumerable.Range(1, 5).Select(index => new Reserva
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+                Cliente = null,
+                Suite = null,
+                Data = DateOnly.FromDateTime(DateTime.Now.AddDays(index))
             })
             .ToArray();
         }

@@ -17,7 +17,6 @@ namespace DevFullstackGuia.Controllers
         private readonly ILogger<SuiteController> _logger;
         private readonly AppDbContext _context;
 
-        // Inject both ILogger and AppDbContext
         public SuiteController(ILogger<SuiteController> logger, AppDbContext context)
         {
             _logger = logger;
@@ -29,10 +28,8 @@ namespace DevFullstackGuia.Controllers
         {
             try
             {
-                // Fetch all Suite entities from the database
                 var suites = await _context.Suite.ToListAsync();
 
-                // Return the list of suites
                 return Ok(suites);
             }
             catch (Exception e)

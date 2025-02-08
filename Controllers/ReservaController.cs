@@ -7,10 +7,6 @@ namespace DevFullstackGuia.Controllers
     [Route("[controller]")]
     public class ReservaController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         private readonly ILogger<ReservaController> _logger;
 
@@ -24,6 +20,7 @@ namespace DevFullstackGuia.Controllers
         {
             return Enumerable.Range(1, 5).Select(index => new Reserva
             {
+                Motel = null,
                 Cliente = null,
                 Suite = null,
                 Data = DateOnly.FromDateTime(DateTime.Now.AddDays(index))

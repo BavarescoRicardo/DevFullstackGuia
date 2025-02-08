@@ -12,44 +12,43 @@ namespace DevFullstackGuia.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ClienteController : ControllerBase
+    public class MotelController : ControllerBase
     {
-        private readonly ILogger<ClienteController> _logger;
+        private readonly ILogger<MotelController> _logger;
         private readonly AppDbContext _context;
 
-        // Inject both ILogger and AppDbContext
-        public ClienteController(ILogger<ClienteController> logger, AppDbContext context)
+        public MotelController(ILogger<MotelController> logger, AppDbContext context)
         {
             _logger = logger;
             _context = context;
         }
 
-        [HttpGet(Name = "GetCliente")]
-        public async Task<ActionResult<IEnumerable<Cliente>>> Get()
+        [HttpGet(Name = "GetMotel")]
+        public async Task<ActionResult<IEnumerable<Motel>>> Get()
         {
             try
             {
-                var clientes = await _context.Cliente.ToListAsync();
+                var motels = await _context.Motel.ToListAsync();
 
-                return Ok(clientes);
+                return Ok(motels);
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error fetching clientes from the database");
-                return StatusCode(500, "An error occurred while fetching clientes.");
+                _logger.LogError(e, "Error fetching motels from the database");
+                return StatusCode(500, "An error occurred while fetching motels.");
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Cliente cliente)
+        public async Task<IActionResult> Create([FromBody] Motel motel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Cliente.Add(cliente);
+                    _context.Motel.Add(motel);
                     await _context.SaveChangesAsync();
-                    return CreatedAtAction(nameof(Get), new { id = cliente.Id }, cliente);
+                    return CreatedAtAction(nameof(Get), new { id = motel.Id }, motel);
                 }
                 else
                 {
@@ -58,8 +57,8 @@ namespace DevFullstackGuia.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error criando cliente");
-                return StatusCode(500, "Error ao criar cliente.");
+                _logger.LogError(e, "Error criando motel");
+                return StatusCode(500, "Error ao criar motel.");
             }
         }
     }

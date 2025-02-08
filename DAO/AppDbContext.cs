@@ -6,6 +6,7 @@ namespace DevFullstackGuia.DAO
     public class AppDbContext : DbContext
     {
         public DbSet<Cliente> User { get; set; }
+        public DbSet<Suite> Suite { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

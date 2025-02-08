@@ -12,41 +12,41 @@ namespace DevFullstackGuia.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UsuarioController : ControllerBase
+    public class SuiteController : ControllerBase
     {
-        private readonly ILogger<UsuarioController> _logger;
+        private readonly ILogger<SuiteController> _logger;
         private readonly AppDbContext _context;
 
         // Inject both ILogger and AppDbContext
-        public UsuarioController(ILogger<UsuarioController> logger, AppDbContext context)
+        public SuiteController(ILogger<SuiteController> logger, AppDbContext context)
         {
             _logger = logger;
             _context = context;
         }
 
-        [HttpGet(Name = "GetUsuario")]
-        public IEnumerable<Cliente> Get()
+        [HttpGet(Name = "GetCliente")]
+        public IEnumerable<Suite> Get()
         {
             // Return a list of users with mock data
-            return Enumerable.Range(1, 5).Select(index => new Cliente
+            return Enumerable.Range(1, 5).Select(index => new Suite
             {
-                Nome = $"User {index}",
-                Documento = $"0000000{index}",
-                DataNascimento = DateOnly.FromDateTime(DateTime.Now.AddDays(index))
+                Numero = $"User {index}",
+                Disponivel = true,
+                Tipo = $"senha {index}"
             })
             .ToArray();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Cliente user)
+        public async Task<IActionResult> Create([FromBody] Suite suite)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.User.Add(user);
+                    _context.Suite.Add(suite);
                     await _context.SaveChangesAsync();
-                    return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+                    return CreatedAtAction(nameof(Get), new { id = suite.Id }, suite);
                 }
                 else
                 {
@@ -55,8 +55,8 @@ namespace DevFullstackGuia.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error creating user");
-                return StatusCode(500, "An error occurred while creating the user.");
+                _logger.LogError(e, "Error criando cliente");
+                return StatusCode(500, "Error ao criar cliente.");
             }
         }
     }

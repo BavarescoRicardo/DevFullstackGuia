@@ -25,10 +25,10 @@ namespace DevFullstackGuia.Controllers
         }
 
         [HttpGet(Name = "GetUsuario")]
-        public IEnumerable<User> Get()
+        public IEnumerable<Cliente> Get()
         {
             // Return a list of users with mock data
-            return Enumerable.Range(1, 5).Select(index => new User
+            return Enumerable.Range(1, 5).Select(index => new Cliente
             {
                 Nome = $"User {index}",
                 Documento = $"0000000{index}",
@@ -38,7 +38,7 @@ namespace DevFullstackGuia.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<IActionResult> Create([FromBody] Cliente user)
         {
             try
             {

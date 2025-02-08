@@ -7,21 +7,20 @@ namespace DevFullstackGuia.Models
     {
         [Key]
         public Guid Id { get; set; }
-
-        public required string Nome { get; set; }
-        public required string Documento { get; set; }
-        public required DateOnly DataNascimento { get; set; }
+        public required DateOnly Data { get; set; }
+        public required Cliente Cliente { get; set; }
+        public required Suite Suite{ get; set; }
 
         // Parameterless constructor (required for object initialization)
         public Reserva() { }
 
         // Optional: Parameterized constructor (if needed)
-        public Reserva(string nome, string documento, DateOnly dataNascimento)
+        public Reserva(Cliente cliente, Suite suite, DateOnly data)
         {
             Id = Guid.NewGuid();
-            Nome = nome;
-            Documento = documento;
-            DataNascimento = dataNascimento;
+            Cliente = cliente;
+            Suite = suite;
+            Data = data;
         }
     }
 }

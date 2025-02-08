@@ -3,25 +3,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DevFullstackGuia.Models
 {
-    public class Usuario
+    public class Motel
     {
         [Key]
         public Guid Id { get; set; }
 
         public required string Nome { get; set; }
         public required string Documento { get; set; }
-        public required DateOnly DataNascimento { get; set; }
+        public string? Observacao { get; set; }
 
         // Parameterless constructor (required for object initialization)
-        public Usuario() { }
+        public Motel() { }
 
         // Optional: Parameterized constructor (if needed)
-        public Usuario(string nome, string documento, DateOnly dataNascimento)
+        public Motel(string nome, string documento, string observacao)
         {
             Id = Guid.NewGuid();
             Nome = nome;
             Documento = documento;
-            DataNascimento = dataNascimento;
+            Observacao = observacao;
         }
     }
 }

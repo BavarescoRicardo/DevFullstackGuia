@@ -8,6 +8,7 @@ namespace DevFullstackGuia.DAO
         public DbSet<Motel> Motel { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Suite> Suite { get; set; }
+        public DbSet<Reserva> Reserva { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +22,9 @@ namespace DevFullstackGuia.DAO
                 .HasKey(c => c.Id);
 
             modelBuilder.Entity<Suite>()
+                .HasKey(s => s.Id);
+
+            modelBuilder.Entity<Reserva>()
                 .HasKey(s => s.Id);
         }
     }

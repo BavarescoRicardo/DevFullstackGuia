@@ -1,5 +1,7 @@
-using DevFullstackGuia.Models;
+using DevFullstackGuia.DTO;
+using DevFullstackGuia.Services;
 using Microsoft.AspNetCore.Mvc;
+using DevFullstackGuia.Models;
 
 namespace DevFullstackGuia.Controllers
 {
@@ -7,25 +9,53 @@ namespace DevFullstackGuia.Controllers
     [Route("[controller]")]
     public class ReservaController : ControllerBase
     {
-
+        private readonly ReservaService _reservaService;
         private readonly ILogger<ReservaController> _logger;
 
-        public ReservaController(ILogger<ReservaController> logger)
+        public ReservaController(ReservaService reservaService, ILogger<ReservaController> logger)
         {
+            _reservaService = reservaService;
             _logger = logger;
         }
 
         [HttpGet(Name = "GetReserva")]
-        public IEnumerable<Reserva> Get()
+        public async Task<ActionResult<IEnumerable<Reserva>>> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new Reserva
+            try
             {
-                Motel = null,
-                Cliente = null,
-                Suite = null,
-                Data = DateOnly.FromDateTime(DateTime.Now.AddDays(index))
-            })
-            .ToArray();
+                var reservas = await _reservaService.GetReservas();
+                return Ok(reservas);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error fetching reservas from the database");
+                return StatusCode(500, "An error occurred while fetching reservas.");
+            }
+        }
+
+        [HttpPost(Name = "FazerReserva")]
+        public async Task<IActionResult> Create([FromBody] ReservaDTO reservaDTO)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Use the ReservaService to create the Reserva
+                    var reserva = await _reservaService.FazerReserva(reservaDTO);
+
+                    // Return the created Reserva
+                    return CreatedAtAction(nameof(Get), new { id = reserva.Id }, reserva);
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error creating reserva");
+                return StatusCode(500, "An error occurred while creating the reserva.");
+            }
         }
     }
 }

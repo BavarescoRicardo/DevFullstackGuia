@@ -9,6 +9,8 @@ namespace DevFullstackGuia.Models
         public Guid Id { get; set; }
 
         public required string Nome { get; set; }
+        public required string Email { get; set; }
+        public required string Senha { get; set; }
         public required string Documento { get; set; }
         public required DateOnly DataNascimento { get; set; }
 
@@ -16,10 +18,12 @@ namespace DevFullstackGuia.Models
         public Cliente() { }
 
         // Optional: Parameterized constructor (if needed)
-        public Cliente(string nome, string documento, DateOnly dataNascimento)
+        public Cliente(string nome, string email, string senha, string documento, DateOnly dataNascimento)
         {
             Id = Guid.NewGuid();
             Nome = nome;
+            Email = email;
+            Senha = senha;
             Documento = documento;
             DataNascimento = dataNascimento;
         }

@@ -1,0 +1,6 @@
+@DevFullstackGuia_HostAddress = http://localhost:5043
+
+GET {{DevFullstackGuia_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

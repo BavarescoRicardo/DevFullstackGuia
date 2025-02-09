@@ -9,7 +9,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuração do Kestrel para escutar em todas as interfaces e nas portas 3030 e 3033
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.ListenAnyIP(3030); // Escuta na porta 3030
@@ -23,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register Services
+builder.Services.AddScoped<FaturamentoService>();
 builder.Services.AddScoped<ReservaService>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<TokenProvider>();
@@ -106,7 +106,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
+// app.UseHttpsRedirection();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -117,9 +117,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// app.UseHttpsRedirection();
 
-// Enable authentication and authorization
 app.UseAuthentication();
 app.UseAuthorization();
 

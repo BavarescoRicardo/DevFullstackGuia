@@ -1,6 +1,4 @@
 API RESTful para Gestão de Reservas de Motéis
-Disponivel com link:
- http://45.191.187.35:3033/swagger/index.html
 
 Este projeto é uma API RESTful desenvolvida em .NET 8 para gerenciar reservas de motéis. A API inclui funcionalidades como cadastro e login de usuários (com autenticação JWT), listagem de reservas filtradas por data e cálculo de faturamento mensal. O banco de dados utilizado é o PostgreSQL, e o projeto foi desenvolvido com foco em segurança, performance e boas práticas de desenvolvimento.
 Requisitos do Projeto
@@ -52,7 +50,7 @@ cd nome-do-repositorio
     A API estará disponível em:
     Copy
 
-http://45.191.187.35:3033/swagger/index.html
+http://localhost:3033/swagger/index.html
 
 5. Testar os Endpoints
 

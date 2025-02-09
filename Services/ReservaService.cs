@@ -28,8 +28,6 @@ namespace DevFullstackGuia.Services
             {
                 throw new ArgumentException("Invalid Motel, Cliente, or Suite code.");
             }
-            // Mudar diponibilidade da suite
-            suite.Disponivel = false;
 
             // Create the Reserva entity
             var reserva = new Reserva

@@ -1,13 +1,8 @@
-using DevFullstackGuia.DAO; // Add this namespace for AppDbContext
+using DevFullstackGuia.DAO; 
 using DevFullstackGuia.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DevFullstackGuia.Controllers
 {
@@ -19,7 +14,6 @@ namespace DevFullstackGuia.Controllers
         private readonly ILogger<ClienteController> _logger;
         private readonly AppDbContext _context;
 
-        // Inject both ILogger and AppDbContext
         public ClienteController(ILogger<ClienteController> logger, AppDbContext context)
         {
             _logger = logger;

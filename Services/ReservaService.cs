@@ -1,5 +1,4 @@
-﻿using DevFullstackGuia.Controllers;
-using DevFullstackGuia.DAO;
+﻿using DevFullstackGuia.DAO;
 using DevFullstackGuia.DTO;
 using DevFullstackGuia.Models;
 using Microsoft.AspNetCore.Mvc;

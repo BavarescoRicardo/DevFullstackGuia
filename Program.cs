@@ -9,6 +9,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuração do Kestrel para escutar em todas as interfaces e nas portas 3030 e 3033
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(3030); // Escuta na porta 3030
+    serverOptions.ListenAnyIP(3033); // Escuta na porta 3033
+});
+
 // Add services to the container.
 
 // Register the DbContext with PostgreSQL
@@ -110,7 +117,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 // Enable authentication and authorization
 app.UseAuthentication();

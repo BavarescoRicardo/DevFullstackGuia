@@ -2,11 +2,13 @@ using DevFullstackGuia.DTO;
 using DevFullstackGuia.Services;
 using Microsoft.AspNetCore.Mvc;
 using DevFullstackGuia.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevFullstackGuia.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class ReservaController : ControllerBase
     {
         private readonly ReservaService _reservaService;

@@ -1,38 +1,41 @@
 ﻿using DevFullstackGuia.Models;
-using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt; // Use this namespace
 using System.Security.Claims;
 using System.Text;
 
 namespace DevFullstackGuia.Security
 {
-    public class TokenProvider(IConfiguration configuration)
+    public class TokenProvider
     {
+        private readonly IConfiguration _configuration;
+
+        public TokenProvider(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public string Create(Cliente cliente)
         {
-            string secretKey = configuration["Jwt:Secret"];
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]!));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(
-                [
-                    new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, cliente.Id.ToString()),
-                    new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, cliente.Email)
 
-                ]),
-                Expires = DateTime.UtcNow.AddMinutes(configuration.GetValue<int>("Jwt:Expiration")),
-                SigningCredentials = credentials,
-                Issuer = configuration["Jwt:Issuer"],
-                Audience = configuration["Jwt:Audience"],
+            var claims = new[]
+            {
+                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, cliente.Id.ToString()), // Single value for "sub"
+                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, cliente.Email)
             };
 
-            var handler = new JsonWebTokenHandler();
-            string token = handler.CreateToken(tokenDescriptor);
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Jwt:Expiration")),
+                signingCredentials: credentials
+            );
 
-            return token;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

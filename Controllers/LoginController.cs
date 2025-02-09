@@ -1,4 +1,5 @@
 using DevFullstackGuia.DTO;
+using DevFullstackGuia.Security;
 using DevFullstackGuia.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

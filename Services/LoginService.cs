@@ -1,6 +1,8 @@
 ﻿using DevFullstackGuia.DAO;
 using DevFullstackGuia.DTO;
 using DevFullstackGuia.Models;
+using DevFullstackGuia.Security;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,14 +14,16 @@ namespace DevFullstackGuia.Services
     {
         private readonly ILogger<LoginService> _logger;
         private readonly AppDbContext _context;
+        private readonly TokenProvider _tokenProvider;
 
-        public LoginService(ILogger<LoginService> logger, AppDbContext context)
+        public LoginService(ILogger<LoginService> logger, AppDbContext context, TokenProvider tokenProvider)
         {
             _logger = logger;
             _context = context;
+            _tokenProvider = tokenProvider;
         }
 
-        public async Task<Cliente> FazerLogin(LoginDTO loginDTO)
+        public async Task<string> FazerLogin(LoginDTO loginDTO)
         {
             if (string.IsNullOrEmpty(loginDTO.Email) || string.IsNullOrEmpty(loginDTO.Senha))
             {
@@ -35,7 +39,13 @@ namespace DevFullstackGuia.Services
                 throw new ArgumentException("Invalid email or password.");
             }
 
-            return cliente;
+            // Generate JWT token
+            var token = _tokenProvider.Create(cliente);
+            if (token == null)
+            {
+                throw new ArgumentException("Erro nas credenciais.");
+            }
+            return token;
         }
     }
 }

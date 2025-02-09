@@ -169,3 +169,4 @@ C:\Users\bavar\source\repos\DevFullstackGuia\DevFullstackGuia\obj\Debug\net8.0\r
 C:\Users\bavar\source\repos\DevFullstackGuia\DevFullstackGuia\obj\Debug\net8.0\DevFullstackGuia.pdb
 C:\Users\bavar\source\repos\DevFullstackGuia\DevFullstackGuia\obj\Debug\net8.0\DevFullstackGuia.genruntimeconfig.cache
 C:\Users\bavar\source\repos\DevFullstackGuia\DevFullstackGuia\obj\Debug\net8.0\ref\DevFullstackGuia.dll
+C:\Users\bavar\source\repos\DevFullstackGuia\DevFullstackGuia\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

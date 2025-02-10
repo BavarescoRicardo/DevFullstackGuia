@@ -13,8 +13,6 @@ Requisitos do Projeto
 
 Como Executar o Projeto
 1. Clonar o Repositório
-bash
-Copy
 
 git clone https://github.com/seu-usuario/nome-do-repositorio.git
 cd nome-do-repositorio
@@ -25,7 +23,7 @@ cd nome-do-repositorio
 
     Atualize a string de conexão no arquivo appsettings.json:
     json
-    Copy
+    exemplo:
 
     "ConnectionStrings": {
       "DefaultConnection": "Host=localhost;Database=motel_db;Username=seu_usuario;Password=sua_senha"
@@ -34,21 +32,14 @@ cd nome-do-repositorio
 3. Aplicar Migrações
 
     Execute as migrações para criar as tabelas no banco de dados:
-    bash
-    Copy
-
     dotnet ef database update
 
 4. Executar a API
 
     Execute o projeto:
-    bash
-    Copy
-
     dotnet run
 
     A API estará disponível em:
-    Copy
 
 http://localhost:3033/swagger/index.html
 
@@ -57,7 +48,6 @@ http://localhost:3033/swagger/index.html
     Use o Postman ou Swagger UI para testar os endpoints:
 
         Acesse o Swagger UI em:
-        Copy
 
         http://localhost:3030/swagger
 
@@ -67,7 +57,7 @@ Autenticação
     POST /api/auth/register
     Cadastra um novo usuário.
     json
-    Copy
+    Exemplo
 
     {
       "username": "usuario",
@@ -77,7 +67,7 @@ Autenticação
     POST /api/auth/login
     Realiza o login e retorna um token JWT.
     json
-    Copy
+    exemplo:
 
     {
       "username": "usuario",
@@ -86,21 +76,34 @@ Autenticação
 
 Reservas
 
-    GET /api/reservas?data=YYYY-MM-DD
-    Lista todas as reservas filtradas por data.
+    GET /api/reservas
+    Lista todas as reservas 
+
+    GET /Reserva/GetReservaByData
+    Lista todas as reservas filtrando a data
+    Parameters     ano(int), mes(int) e dia(int?) opcional
+	
 
     POST /api/reservas
     Cria uma nova reserva.
     json
-    Copy
+    exemplo:
 
-    {
-      "motelId": 1,
-      "suiteId": 1,
-      "clienteId": 1,
-      "dataInicio": "2024-02-10",
-      "dataFim": "2024-02-12"
+    {    
+        "data": "2025-04-10",
+        "motel": "id model",
+        "cliente": "id cliente",
+        "suite": "id suite"   
     }
+
+Faturamentp
+
+    GET     /api/Faturamento/mensal
+    Parameters
+        ano     int	
+        mes     int
+	
+    Exibe faturamento do mes especificado pela data
 
 Segurança
 
@@ -126,10 +129,6 @@ Autor
 
     LinkedIn: Ricardo Bavaresco
 
-Licença
-
-Este projeto está licenciado sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
-Vídeo Explicativo
 
 Clique aqui para assistir ao vídeo explicativo do código
 (Inclua um link para o vídeo explicativo, se possível.)

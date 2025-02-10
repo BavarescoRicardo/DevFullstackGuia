@@ -22,7 +22,7 @@ namespace DevFullstackGuia.Services
             // Fetch the related entities from the database using their codes
             var motel = await _context.Motel.FirstOrDefaultAsync(m => m.Id.ToString() == reservaDTO.Motel);
             var cliente = await _context.Cliente.FirstOrDefaultAsync(c => c.Id.ToString() == reservaDTO.Cliente);
-            var suite = await _context.Suite.FirstOrDefaultAsync(s => s.Id.ToString() == reservaDTO.Suite);            
+            var suite = await _context.Suite.FirstOrDefaultAsync(s => s.Id.ToString() == reservaDTO.Suite);
 
             if (motel == null || cliente == null || suite == null)
             {
@@ -52,13 +52,42 @@ namespace DevFullstackGuia.Services
                 var reservas = await _context.Reserva
                     .Include(r => r.Motel)
                     .Include(r => r.Cliente)
-                    .Include(r => r.Suite) 
+                    .Include(r => r.Suite)
                     .ToListAsync();
-                return reservas;                
+                return reservas;
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Error fetching motels from the database");
+                return null;
+            }
+        }
+
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetReservasPorData(int ano, int mes, int? dia = null)
+        {
+            try
+            {
+                var query = _context.Reserva
+                    .Include(r => r.Motel)
+                    .Include(r => r.Cliente)
+                    .Include(r => r.Suite)
+                    .AsQueryable();
+
+                // Filtrar por ano e mês
+                query = query.Where(r => r.Data.Year == ano && r.Data.Month == mes);
+
+                // Filtrar por dia, se fornecido
+                if (dia.HasValue)
+                {
+                    query = query.Where(r => r.Data.Day == dia.Value);
+                }
+
+                var reservas = await query.ToListAsync();
+                return reservas;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error fetching reservas by date from the database");
                 return null;
             }
         }

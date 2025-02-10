@@ -35,6 +35,22 @@ namespace DevFullstackGuia.Controllers
             }
         }
 
+
+        [HttpGet("GetReservaByData")]
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetReservasPorData(int ano, int mes, int? dia = null)
+        {
+            try
+            {
+                var reservas = await _reservaService.GetReservasPorData(ano, mes, dia);
+                return Ok(reservas);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error fetching reservas by date from the database");
+                return StatusCode(500, "An error occurred while fetching reservas by date.");
+            }
+        }
+
         [HttpPost(Name = "FazerReserva")]
         public async Task<IActionResult> Create([FromBody] ReservaDTO reservaDTO)
         {

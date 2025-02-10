@@ -1,4 +1,6 @@
 API RESTful para Gestão de Reservas de Motéis
+Clique aqui para assistir ao vídeo explicativo do código
+https://youtu.be/aGiVKNEMd0s
 
 Este projeto é uma API RESTful desenvolvida em .NET 8 para gerenciar reservas de motéis. A API inclui funcionalidades como cadastro e login de usuários (com autenticação JWT), listagem de reservas filtradas por data e cálculo de faturamento mensal. O banco de dados utilizado é o PostgreSQL, e o projeto foi desenvolvido com foco em segurança, performance e boas práticas de desenvolvimento.
 Requisitos do Projeto
@@ -128,7 +130,4 @@ Autor
     E-mail: bavaresco.ricardo@gmail.com
 
     LinkedIn: Ricardo Bavaresco
-
-
-Clique aqui para assistir ao vídeo explicativo do código
-(Inclua um link para o vídeo explicativo, se possível.)
+        www.linkedin.com/in/bavarescoricardo

@@ -9,13 +9,15 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel to listen on HTTP and HTTPS
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.ListenAnyIP(3030); // Escuta na porta 3030
-    serverOptions.ListenAnyIP(3033); // Escuta na porta 3033
+    serverOptions.ListenAnyIP(3030); // HTTP
+    serverOptions.ListenAnyIP(3033, listenOptions =>
+    {
+        listenOptions.UseHttps(); // HTTPS (ensure a certificate is configured)
+    });
 });
-
-// Add services to the container.
 
 // Register the DbContext with PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -68,13 +70,10 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configure Swagger
 builder.Services.AddEndpointsApiExplorer();
-
-// Configure Swagger to support JWT
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "DevFullstackGuia API", Version = "v1" });
@@ -106,8 +105,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// Enable HTTPS redirection (uncomment if using HTTPS)
 // app.UseHttpsRedirection();
-// Configure the HTTP request pipeline.
+
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -116,7 +118,6 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevFullstackGuia API V1");
     });
 }
-
 
 app.UseAuthentication();
 app.UseAuthorization();

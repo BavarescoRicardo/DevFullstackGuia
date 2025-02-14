@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DevFullstackGuia.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    [Authorize]
+    [Route("[controller]")]    
     public class ClienteController : ControllerBase
     {
         private readonly ILogger<ClienteController> _logger;
@@ -20,6 +19,7 @@ namespace DevFullstackGuia.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet(Name = "GetCliente")]
         public async Task<ActionResult<IEnumerable<Cliente>>> Get()
         {

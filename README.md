@@ -62,8 +62,11 @@ Autenticação
     Exemplo
 
     {
-      "username": "usuario",
-      "password": "senha123"
+      "nome": "Usuario 0123",
+      "email": "usuario@mail.com",
+      "senha": "usuario",
+      "documento": "789542146",
+      "dataNascimento": "1999-10-05"
     }
 
     POST /api/auth/login
